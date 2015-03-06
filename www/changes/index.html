@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>MEDICARE</title>
+    <link href="ionicons.css" rel="stylesheet">
+
+
+    <!-- Custom styles for this template -->
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <!-- cordova script (this will be a 404 during development) -->
+     <script src="js/app.js"></script>
+    <script src="cordova.js"></script>
+    <style>
+
+    </style>
+     <!-- your app's js -->
+   
+  </head>
+
+  <body ng-app= "todo" ng-controller="TodoCtrl">
+    
+    <ion-nav-bar class="bar-positive">
+      <ion-nav-back-button class="button-icon ion-arrow-left-c">
+      </ion-nav-back-button>
+    </ion-nav-bar>
+              
+    <ion-nav-view></ion-nav-view>
+
+    <script id="templates/sign-in.html" type="text/ng-template">
+      <ion-view view-title="Sign-In">
+        <ion-content>
+        <center>
+        <div id ="logo">
+          <img src = "redcross.jpg" height="100" width="100">
+        </div>
+        </center>
+          <div class="list">
+            <label class="item item-input">
+              <span class="input-label">Username</span>
+              <input type="text" ng-model="user.username">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password" ng-model="user.password">
+            </label>
+          </div>
+          <div class="padding">
+            <button class="button button-block button-positive" ng-click="signIn(user)">
+              Sign-In
+            </button>
+            <p class="text-center">
+              <a href="#/forgot-password">Forgot password</a>
+            </p>
+          </div>
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script id="templates/forgot-password.html" type="text/ng-template">
+      <ion-view view-title="Forgot Password">
+        <ion-content padding="true">
+          <p>
+            Email id 
+          </p>
+          <p>
+          </p>
+          <p>
+            Return to <a href="#/sign-in">Sign-In</a>.
+          </p>
+        </ion-content>
+      </ion-view>
+    </script>
+    
+    <script id="templates/tabs.html" type="text/ng-template">
+      <ion-view>
+        <ion-tabs class="tabs-icon-top tabs-positive">
+
+          <ion-tab title="Home" icon="ion-home" href="#/tab/home">
+            <ion-nav-view name="home-tab"></ion-nav-view>
+          </ion-tab>
+
+          <ion-tab title="About" icon="ion-ios-information" href="#/tab/about">
+            <ion-nav-view name="about-tab"></ion-nav-view>
+          </ion-tab>
+
+          <ion-tab title="Sign-Out" icon="ion-log-out" href="#/sign-in">
+          </ion-tab>
+
+        </ion-tabs>
+      </ion-view>
+    </script>
+
+    <script id="templates/home.html" type="text/ng-template">
+      script id="templates/home.html" type="text/ng-template">
+      <ion-view view-title=""> 
+        <ion-content padding="true">
+          <p><h1 align = "center">Welcome to Medicare</h1></p>
+           <div>
+           <a class="item item-icon-left" href="#">
+            <i class="icon ion-search"></i>
+              <span><h2>Quick Search</h2></span> 
+              <p>
+            <a class="button button-outline button-positive" href="#/tab/Search_Hospitals">
+                  Hospital</a>
+            <a class="button button-outline button-positive" href="#/tab/Pharmacy">
+              Pharmacy
+            </a>
+            <a class="button button-outline button-positive" href="#/tab/Search_Clinics">
+              Clinics</a>
+            </p>
+              </a>
+          <div> 
+          
+          <div class="list">
+
+           <a class="item item-icon-left" href="#/tab/Profile">
+            <i class="icon ion-person"></i>
+              Profile
+            </a>
+
+
+          <a class="item item-icon-left" href="#/tab/Reviews">
+            <i class="icon ion-ribbon-b"></i>
+              Reviews
+            </a>
+
+  <a class="item item-icon-left" href="#/tab/Reminders">
+    <i class="icon ion-ios-bell"></i>
+    Reminders
+    <span class="badge badge-assertive">1</span>
+    <i class="icon ion-ios-bell"></i>
+  </a>
+
+  <a class="item item-icon-left" href="#/tab/Friends">
+    <i class="icon ion-person-stalker"></i>
+    Friends
+    <span class="badge badge-assertive">2</span>
+  </a>
+
+<a class="item item-icon-left" href="#/tab/Notifications">
+    <i class="icon ion-ios-flower"></i>
+    Notifications
+    <span class="badge badge-assertive">1</span>
+  </a>
+</div>
+        </ion-content>
+      </ion-view>
+    </script>
+  
+
+    <script id="templates/CVS.html" type="text/ng-template">
+      <ion-view view-title="CVS Pharmacy">
+        <ion-content padding="true">
+        <p><img src = "CVS-Pharmacy.jpg" height = "150" width = "150" align = "right" ></p>
+          <a href ="http://www.cvs.com/">
+          CVS Pharmacy</a>
+          <p>Rating:<i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i>  <i class="icon ion-ios-star"></i></i></p>
+
+          <p>
+          1711 Sherman Ave</p>
+          <p>Evanston, IL 60201</p>
+          <p>Open today</p>
+          <p>7:00 am – 10:00 pm</p>
+          <p>
+          <img src="googlemaps.gif" width = "100%" height="200"></p>
+          </p>
+          <div ng-controller="MapController" height = "100%">
+              <div id="map" data-tap-disabled="true"  height = "200" width = "100%"></div>
+        </div>
+           <a href="tel:+1-1800-555-5555" class="button button-positive">Call</a>
+            <a class="button icon ion-home" href="#/tab/home"> Home</a>
+            <a class="button button-icon" ng-click="newTask()">
+                <i class="icon ion-compose">Review</i>
+               </a>
+          </p>
+
+          <h5>Reviews:</h5>
+          <p style="font-weight:bold">Aakash Mishra<i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i><i class="icon ion-ios-star"></i></p>
+          <textarea>easily found the drug i required</textarea>
+          <p style="font-weight:bold">Mathew<i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i></p>
+          <textarea>very helpful people</textarea>
+          <p ng-repeat="rev in revs" align = "right" >
+         // {{rev.title}
+            </p>
+            
+         <p style="font-weight:bold" ng-repeat="name in names" >{{name.title}}<i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i>
+          </p>  
+        <textarea ng-repeat="task in tasks">{{task.title}}</textarea>
+        </ion-content>
+      </ion-view>
+    </script> 
+
+  <script id="new-task.html" type="text/ng-template">
+
+  <div class="modal">
+
+    <!-- Modal header bar -->
+    <ion-header-bar class="bar-secondary">
+      <h1 class="title">Review</h1>
+      <button class="button button-clear button-positive" ng-click="closeNewTask()">Cancel</button>
+    </ion-header-bar>
+
+    <!-- Modal content area -->
+    <ion-content>
+
+      <form ng-submit="createTask(task1,task2)">
+        <div class="list">
+          <label class="item item-input">
+            <input type="text" placeholder="NAME" ng-model="task1.title" class="name">
+          </label>
+        </div>
+        <div class="list">
+   
+    <label class="item item-input item-select" >
+     <div class="input-label">
+      Rating
+    </div>
+    <select ng-value="rev.value">
+      <option value = 1>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option selected>5</option>
+      </select>
+    </label>
+
+    </div>
+        <div class="list">
+          <label class="item item-input">
+           <textarea placeholder="Comments" ng-model="task2.title"></textarea>
+          </label>
+        </div>
+        <div class="padding">
+          <button type="submit" class="button button-block button-positive">Add Review</button>
+        </div>
+      </form>
+
+    </ion-content>
+
+  </div>
+
+</script>
+
+
+    <script id="templates/Pharmacy.html" type="text/ng-template">
+
+      <ion-view view-title="Pharmacy">
+
+        <ion-content padding="true">
+         <p><h1 align = "center">Search Results </h1></p>
+        <p>
+          <ul class="list">
+                     <a class="item item-thumbnail-left" href="#/tab/CVS">
+                <img src="CVS-Pharmacy.jpg">
+                <h2>CVS-Pharmacy</h2>
+                <p><i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i>  <i class="icon ion-ios-star"></i></i></p>
+                <p> easily found the drug i require </p> 
+              </a>
+                   <a class="item item-thumbnail-left" href="#">
+                <img src="walgreens.jpeg">
+                <h2>Walgreens</h2>
+                <p><i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> </i></p>
+                <p> Small outlet hard to find a Drug</p> 
+              </a>
+               <a class="item item-thumbnail-left" href="#">
+                <img src="oscopharmacy.jpeg">
+                <h2>Osco-Pharmacy</h2>
+                <p><i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> </i></p>
+                <p> Great people!! very Helpful</p> 
+              </a>
+               <a class="item item-thumbnail-left" href="#">
+                <img src="sams pharmacy.jpg">
+                <h2>Sams Club pharmacy</h2>
+                <p><i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i></p>
+                <p> Dont go!!</p> 
+              </a>
+                </ul>
+          
+            <a class="button icon ion-home" href="#/tab/home"> Home</a>
+            
+          </p>
+        </ion-content>
+      </ion-view>
+    </script>
+
+
+    <script id="templates/about.html" type="text/ng-template">
+      <ion-view view-title="About">
+        <ion-content padding="true">
+          <h3>Create hybrid mobile apps with the web technologies you love.</h3>
+          <p>Free and open source, Ionic offers a library of mobile-optimized HTML, CSS and JS components for building highly interactive apps.</p>
+          <p>Built with Sass and optimized for AngularJS.</p>
+          <p>
+            <a class="button icon icon-right ion-chevron-right" href="#/tab/navstack">Tabs Nav Stack</a>
+          </p>
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script id="templates/nav-stack.html" type="text/ng-template">
+      <ion-view view-title="Tab Nav Stack">
+        <ion-content padding="true">
+          <p><img src="http://ionicframework.com/img/diagrams/tabs-nav-stack.png" style="width:100%"></p>
+        </ion-content>
+      </ion-view>
+    </script>
+
+
+<script id="templates/Search_Hospitals.html" type="text/ng-template">
+      <ion-view view-title="MediCare"> 
+        <ion-content padding="true">
+          <p><h1 align = "center">Search Results </h1></p>
+
+          <div class="list">
+              <a class="item item-thumbnail-left" href="#">
+                <img src="cover.jpg">
+                <h2>Northshore Evanston</h2>
+                <p> <i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i><i class="icon ion-ios-star"></i></p>
+                 <p> Excellent Doctors. Good care. </p> 
+                </a>
+
+              <a class="item item-thumbnail-left" href="#">
+                <img src="cover.jpg">
+                <h2>American Heart Center</h2>
+                <p><i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> <i class="icon ion-ios-star-half"></i></p>
+                  <p> Excellent Doctors </p> 
+              </a>
+
+              <a class="item item-thumbnail-left" href="#">
+                <img src="cover.jpg">
+                <h2>United Hospitals</h2>
+                <p><i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> <i class="icon ion-ios-star-half"></i></p>
+                 <p>Hated the service. would not reccomend to anyone</p> 
+              </a>
+              <a class="item item-thumbnail-left" href="#">
+                <img src="cover.jpg">
+                <h2>Stanford Medical Center</h2>
+                <p><i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> </i></p>
+                <p> Could have been better. Stuck up doctors </p> 
+              </a>
+
+              <a class="item item-thumbnail-left" href="#">
+                <img src="cover.jpg">
+                <h2>Evanston Hospitals</h2>
+                <p><i class="icon ion-ios-star"></i> <i class="icon ion-ios-star-half"></i></p>
+                <p>Dont come here if you have other options!!! </p> 
+              </a>
+        </div>
+        </ion-content>
+      </ion-view>
+    </script>
+
+
+<script id="templates/Search_Clinics.html" type="text/ng-template">
+      <ion-view view-title="MediCare"> 
+        <ion-content padding="true">
+          <p><h1 align = "center">Search Results </h1></p>
+
+          <div class="list">
+              <a class="item item-thumbnail-left" href="#">
+                <img src="cover.jpg">
+                <h2>Northshore Evanston</h2>
+                <p> <i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i><i class="icon ion-ios-star"></i></p>
+                 <p> Excellent Doctors. Good care. </p> 
+                </a>
+
+              <a class="item item-thumbnail-left" href="#">
+                <img src="cover.jpg">
+                <h2>American Heart Center</h2>
+                <p><i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> <i class="icon ion-ios-star-half"></i></p>
+                  <p> Excellent Doctors </p> 
+              </a>
+
+              <a class="item item-thumbnail-left" href="#">
+                <img src="cover.jpg">
+                <h2>United Hospitals</h2>
+                <p><i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> <i class="icon ion-ios-star-half"></i></p>
+                 <p>Hated the service. would not reccomend to anyone</p> 
+              </a>
+              <a class="item item-thumbnail-left" href="#">
+                <img src="cover.jpg">
+                <h2>Stanford Medical Center</h2>
+                <p><i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> <i class="icon ion-ios-star"></i> </i></p>
+                <p> Could have been better. Stuck up doctors </p> 
+              </a>
+
+              <a class="item item-thumbnail-left" href="#">
+                <img src="cover.jpg">
+                <h2>Evanston Hospitals</h2>
+                <p><i class="icon ion-ios-star"></i> <i class="icon ion-ios-star-half"></i></p>
+                <p>Dont come here if you have other options!!! </p> 
+              </a>
+        </div>
+        </ion-content>
+      </ion-view>
+    </script>
+     <script id="templates/Friends.html" type="text/ng-template">
+      <ion-view view-title="Friends">
+        <ion-content padding="true">
+        <div class="list">
+           <a class="item item-icon-left" href="#/tab/Profile">
+            <i class="icon ion-person"></i>
+              User 1  
+            </a>
+
+           <a class="item item-icon-left" href="#/tab/Profile">
+            <i class="icon ion-person"></i>
+              User 2 
+            </a>
+
+           <a class="item item-icon-left" href="#/tab/Profile">
+            <i class="icon ion-person"></i>
+              User 3 
+            </a>
+
+           <a class="item item-icon-left" href="#/tab/Profile">
+            <i class="icon ion-person"></i>
+              User 4 
+            </a>
+      </div>
+        </ion-content>
+      </ion-view>
+    </script>
+    <script id="templates/Reminders.html" type="text/ng-template">
+      <ion-view view-title="MediCare"> 
+        <ion-content padding="true">
+          <p><h1 align = "center">Reminders</h1></p>
+
+          <ul class="list">
+            <li class="item item-toggle">
+               Doctors Appointment (10:00 am)
+               <label class="toggle toggle-assertive">
+                 <input type="checkbox">
+                 <div class="track">
+                   <div class="handle"></div>
+                 </div>
+               </label>
+            </li>
+            <li class="item item-toggle">
+               Take medicines after lunch (1:00 pm)
+               <label class="toggle toggle-assertive">
+                 <input type="checkbox">
+                 <div class="track">
+                   <div class="handle"></div>
+                 </div>
+               </label>
+            </li>
+
+          <li class="item item-toggle">
+               Take Medicines before dinner (7:00 pm)
+               <label class="toggle toggle-assertive">
+                 <input type="checkbox">
+                 <div class="track">
+                   <div class="handle"></div>
+                 </div>
+               </label>
+            </li>
+            </ul> 
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script id="templates/Profile.html" type="text/ng-template">
+      <ion-view view-title="Profile"> 
+        <ion-content padding="true">
+          <p><h1 align = "center">Surabhi Ravishankar</h1></p>
+
+          <div class="list card">
+
+              <div class="item item-avatar">
+                <img src="mcfly.jpg">
+                <p> Doctor, Humanitarian </p> 
+                <p> Date of Birth: November 05, 1955</p>
+                <p> Experience: 10 years</p>
+                <p> Profession: Doctor</p>
+              </div>
+
+              <div class="item item-body">
+                <img class="full-image" src="mcfly.jpg">
+                <p>
+                  <a href="#" class="subdued">1 Like</a>
+                  <a href="#" class="subdued">5 Comments</a>
+                </p>
+              </div>
+
+              <div class="item tabs tabs-secondary tabs-icon-left">
+                <a class="tab-item" href="#">
+                  <i class="icon ion-thumbsup"></i>
+                  Like
+                </a>
+                <a class="tab-item" href="#">
+                  <i class="icon ion-chatbox"></i>
+                  Comment
+                </a>
+                <a class="tab-item" href="#">
+                  <i class="icon ion-share"></i>
+                  Share
+                </a>
+              </div>
+
+        </div>
+
+        <div class="item item-body">
+                <img class="full-image" src="checked.jpg">
+                <p>
+                <p> Checked in at CVS Pharmacy </p> 
+                  <a href="#" class="subdued">1 Like</a>
+                </p>
+
+                <div class="item tabs tabs-secondary tabs-icon-left">
+                <a class="tab-item" href="#">
+                  <i class="icon ion-thumbsup"></i>
+                  Like
+                </a>
+                <a class="tab-item" href="#">
+                  <i class="icon ion-chatbox"></i>
+                  Comment
+                </a>
+                <a class="tab-item" href="#">
+                  <i class="icon ion-share"></i>
+                  Share
+                </a>
+              </div>
+        </div>
+        </ion-content>
+      </ion-view>
+    </script>
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyC5ogi0OUl6MBFVXelJYbQ72eRSLofvC9Y&sensor=true"></script>
+  </body>
+
+</html>
+
+
+</script>
+
+</body>
+</html>
